@@ -36,7 +36,35 @@ export default class NavMenu extends React.PureComponent<
                             isOpen={this.state.isOpen}
                             navbar
                         >
-                            <ul className='navbar-nav flex-grow'></ul>
+                            <ul className='navbar-nav flex-grow'>
+                                <NavItem>
+                                    <NavLink
+                                        tag={Link}
+                                        className='text-dark'
+                                        to='/'
+                                    >
+                                        Items
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink
+                                        tag={Link}
+                                        className='text-dark'
+                                        to='/'
+                                    >
+                                        MaxCosts
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink
+                                        tag={Link}
+                                        className='text-dark'
+                                        to='/'
+                                    >
+                                        SearchMax
+                                    </NavLink>
+                                </NavItem>
+                            </ul>
                         </Collapse>
                     </Container>
                 </Navbar>
