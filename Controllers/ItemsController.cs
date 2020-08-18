@@ -145,7 +145,7 @@ namespace ItemKeeper.Controllers
                 _db.Items.Remove(item);
                 await _db.SaveChangesAsync();
 
-                return Ok();
+                return Ok(await _db.Items.ToListAsync());
 
             }
             catch (Exception ex)
