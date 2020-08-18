@@ -13,9 +13,9 @@ namespace ItemKeeper.Models
         public int ID { get; set; }
 
         [Column("name"), MaxLength(50), Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Column("cost"), Required]
-        public int Cost { get; set; }
+        public int? Cost { get; set; }
     }
 }
