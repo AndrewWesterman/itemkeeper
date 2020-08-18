@@ -1,4 +1,4 @@
-import { GET_ITEMS } from '../actions/types';
+import { GET_ITEMS, DELETE_ITEM } from '../actions/types';
 import { KnownAction } from '../actions/items';
 import { Item } from '../models/Item';
 import { Action, Reducer } from 'redux';
@@ -22,6 +22,7 @@ export const items: Reducer<ItemState> = (
     const { type, items } = incomingAction as KnownAction;
     switch (type) {
         case GET_ITEMS:
+        case DELETE_ITEM:
             return { ...state, items, isLoading: false };
         default:
             return state;

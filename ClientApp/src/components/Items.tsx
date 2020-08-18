@@ -38,7 +38,12 @@ class Items extends PureComponent<ItemsProps> {
                                         <button className='btn btn-info'>
                                             Edit
                                         </button>{' '}
-                                        <button className='btn btn-danger'>
+                                        <button
+                                            className='btn btn-danger'
+                                            onClick={() => {
+                                                this.props.deleteItem(item.id);
+                                            }}
+                                        >
                                             Delete
                                         </button>
                                     </div>
