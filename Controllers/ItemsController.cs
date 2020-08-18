@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using ItemKeeper.Data;
 using ItemKeeper.Models;
@@ -35,6 +36,32 @@ namespace ItemKeeper.Controllers
             }
         }
 
+        // GET /api/items/maxPrices
+        // Return max prices for each item
+        [HttpGet("maxPrices")]
+        public async Task<IActionResult> GetMaxPrices()
+        {
+            try
+            {
+                // Equivalent of SELECT name, MAX(cost) FROM items GROUP BY name
+                IQueryable<Item> items =
+                    from item in _db.Items
+                    group item by item.Name into g
+                    select new Item
+                    {
+                        Name = g.Key,
+                        Cost = g.Max(i => i.Cost)
+                    };
+
+                return Ok(items);
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine($"Server error: {e.Message}");
+                return StatusCode(500);
+            }
+        }
+
         // GET /api/items/:id
         // Return item with id
         [HttpGet("{id}")]
@@ -54,6 +81,7 @@ namespace ItemKeeper.Controllers
                 return ServerError(ex);
             }
         }
+
 
         // POST /api/items/
         // Create an item
