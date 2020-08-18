@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ItemKeeper.Data;
 using ItemKeeper.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace ItemKeeper.Controllers
 {
@@ -21,7 +18,8 @@ namespace ItemKeeper.Controllers
             _db = db;
         }
 
-        // GET: api/<ItemController>
+        // GET /api/items/
+        // Return all items
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -37,63 +35,102 @@ namespace ItemKeeper.Controllers
             }
         }
 
-        // GET api/<ItemController>/5
+        // GET /api/items/:id
+        // Return item with id
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                return $"value ${id}";
+                var item = await _db.Items.FirstOrDefaultAsync(item => item.ID == id);
+                if (item == null)
+                {
+                    return NotFound(new { msg = "Item not found" });
+                }
+                return Ok(item);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return ServerError(ex);
             }
         }
 
-        // POST api/<ItemController>
+        // POST /api/items/
+        // Create an item
         [HttpPost]
-        public void Post([FromBody] Item item)
+        public async Task<IActionResult> Post([FromBody] Item item)
         {
             try
             {
                 // Create the item
-            }
-            catch (Exception)
-            {
+                var newItem = (await _db.Items.AddAsync(item)).Entity;
+                await _db.SaveChangesAsync();
 
-                throw;
+                // Return the new item w/ internal id (maybe return empty 200 if we dont need
+                return Ok(newItem);
+            }
+            catch (Exception ex)
+            {
+                return ServerError(ex);
             }
         }
 
-        // PUT api/<ItemController>/5
+        // PUT /api/items/
+        // Update and item
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Item item)
+        public async Task<IActionResult> Put(int id, [FromBody] Item item)
         {
             try
             {
                 // Update the item with id
-            }
-            catch (Exception)
-            {
+                var itemToUpdate = await _db.Items.FirstOrDefaultAsync(item => item.ID == id);
+                if (itemToUpdate == null)
+                {
+                    return NotFound(new { msg = "Item not found" });
+                }
+                if(await TryUpdateModelAsync(itemToUpdate, "", item => item.Name, item => item.Cost))
+                {
+                    await _db.SaveChangesAsync();
 
-                throw;
+                    return Ok(itemToUpdate);
+                }
+                return ServerError();
+            }
+            catch (Exception ex)
+            {
+                return ServerError(ex);
             }
         }
 
-        // DELETE api/<ItemController>/5
+        // DELETE /api/items/
+        // Delete an item
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
                 // Delete the item with id
-            }
-            catch (Exception)
-            {
+                var item = await _db.Items.FirstOrDefaultAsync(item => item.ID == id);
+                if (item == null)
+                {
+                    return BadRequest(new { msg = "Item not found." });                
+                }
+                _db.Items.Remove(item);
+                await _db.SaveChangesAsync();
 
-                throw;
+                return Ok();
+
             }
+            catch (Exception ex)
+            {
+                return ServerError(ex);
+            }
+        }
+
+        private ActionResult ServerError(Exception ex = null)
+        {
+            Console.Error.WriteLine($"Server error: {ex?.Message ?? "<No error provided>"}");
+            return StatusCode(500, new { msg = "Server error" });
         }
     }
 }
