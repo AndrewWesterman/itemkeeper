@@ -11,7 +11,7 @@ namespace ItemKeeper.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
-        private ItemContext _db;
+        private readonly ItemContext _db;
 
         public ItemsController(ItemContext db): base()
         {
@@ -88,13 +88,12 @@ namespace ItemKeeper.Controllers
                 {
                     return NotFound(new { msg = "Item not found" });
                 }
-                if(await TryUpdateModelAsync(itemToUpdate, "", item => item.Name, item => item.Cost))
-                {
-                    await _db.SaveChangesAsync();
 
-                    return Ok(itemToUpdate);
-                }
-                return ServerError();
+                itemToUpdate.Name = item.Name;
+                itemToUpdate.Cost = item.Cost;
+                await _db.SaveChangesAsync();
+
+                return Ok(itemToUpdate);
             }
             catch (Exception ex)
             {
