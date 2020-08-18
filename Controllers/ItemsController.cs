@@ -53,7 +53,7 @@ namespace ItemKeeper.Controllers
                         Cost = g.Max(i => i.Cost)
                     };
 
-                return Ok(items);
+                return Ok(await items.AsNoTracking().ToListAsync());
             }
             catch (Exception e)
             {
