@@ -230,3 +230,7 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# Personal config files that contain private keys/secrets
+appsettings.Development.json
+appsettings.Production.json
