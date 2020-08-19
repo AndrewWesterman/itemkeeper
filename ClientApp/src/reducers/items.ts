@@ -4,20 +4,28 @@ import {
     GET_ITEM,
     CREATE_ITEM,
     UPDATE_ITEM,
+    GET_MAX_ITEM_COSTS,
 } from '../actions/types';
-import { KnownAction, GetItemsAction, GetItemAction } from '../actions/items';
+import {
+    KnownAction,
+    GetItemsAction,
+    GetItemAction,
+    GetMaxItemsAction,
+} from '../actions/items';
 import { Item } from '../models/Item';
 import { Action, Reducer } from 'redux';
 
 export interface ItemState {
     item?: Item;
     items: Item[];
+    maxItemCosts: Item[];
     isLoading: boolean;
 }
 
 const initialState: ItemState = {
     item: undefined,
     items: [],
+    maxItemCosts: [],
     isLoading: true,
 };
 
@@ -38,6 +46,10 @@ export const items: Reducer<ItemState> = (
         case GET_ITEM:
             const { item } = incomingAction as GetItemAction;
             return { ...state, item, isLoading: false };
+
+        case GET_MAX_ITEM_COSTS:
+            const { maxItemCosts } = incomingAction as GetMaxItemsAction;
+            return { ...state, maxItemCosts, isLoading: false };
         default:
             return state;
     }

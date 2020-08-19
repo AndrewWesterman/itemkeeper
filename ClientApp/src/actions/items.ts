@@ -7,6 +7,7 @@ import {
     GET_ITEM,
     CREATE_ITEM,
     UPDATE_ITEM,
+    GET_MAX_ITEM_COSTS,
 } from './types';
 
 export interface GetItemsAction {
@@ -19,7 +20,12 @@ export interface GetItemAction {
     item: Item;
 }
 
-export type KnownAction = GetItemsAction | GetItemAction;
+export interface GetMaxItemsAction {
+    type: String;
+    maxItemCosts: Item[];
+}
+
+export type KnownAction = GetItemsAction | GetItemAction | GetMaxItemsAction;
 
 export const actions = {
     // Get the items from server
@@ -29,6 +35,16 @@ export const actions = {
                 res.json()
             );
             dispatch({ type: GET_ITEMS, items });
+        } catch (err) {}
+    },
+
+    // Gets all unique items and their max cost
+    getMaxItemCosts: (): AppThunkAction<KnownAction> => async (dispatch) => {
+        try {
+            const maxItemCosts: Item[] = await fetch(
+                '/api/items/maxPrices'
+            ).then((res) => res.json());
+            dispatch({ type: GET_MAX_ITEM_COSTS, maxItemCosts });
         } catch (err) {}
     },
 

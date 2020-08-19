@@ -1,11 +1,9 @@
-import React, { Fragment, PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { ItemState } from '../reducers/items';
 import { actions } from '../actions/items';
 import { ApplicationState } from '../store';
 import { Item } from '../models/Item';
-import { Redirect } from 'react-router';
 import { History, LocationState } from 'history';
 
 type ItemsProps = ItemState &
