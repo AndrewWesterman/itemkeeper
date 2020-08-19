@@ -62,6 +62,35 @@ namespace ItemKeeper.Controllers
             }
         }
 
+
+
+        // GET /api/items/:name/maxPrice
+        // Return the entry with the max price for the named item
+        [HttpGet("{name}/maxPrice")]
+        public async Task<IActionResult> GetMaxPriceForItem(string name)
+        {
+            try
+            {
+                // Equivalent of SELECT name, MAX(cost) FROM items WHERE name=@name GROUP BY name
+                var maxCostItem = await
+                    (from item in _db.Items
+                    where item.Name == name
+                    group item by item.Name into g
+                    select new Item
+                    {
+                        Name = g.Key,
+                        Cost = g.Max(i => i.Cost)
+                    }).FirstOrDefaultAsync();
+
+                return Ok(maxCostItem);
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine($"Server error: {e.Message}");
+                return StatusCode(500);
+            }
+        }
+
         // GET /api/items/:id
         // Return item with id
         [HttpGet("{id}")]
