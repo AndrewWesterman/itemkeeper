@@ -5,8 +5,11 @@ import { ItemState } from '../reducers/items';
 import { actions } from '../actions/items';
 import { ApplicationState } from '../store';
 import { Item } from '../models/Item';
+import { Redirect } from 'react-router';
+import { History, LocationState } from 'history';
 
-type ItemsProps = ItemState & typeof actions;
+type ItemsProps = ItemState &
+    typeof actions & { history: History<LocationState> };
 
 class Items extends PureComponent<ItemsProps> {
     public componentDidMount() {
@@ -14,19 +17,27 @@ class Items extends PureComponent<ItemsProps> {
     }
 
     public render() {
-        const { items } = this.props;
+        const { items, history } = this.props;
         return (
             <div>
                 <h1 className='text-primary'>All Current Items</h1>
-                <p>
+                <p className='float-left'>
                     Below is a list off all current items catalogued in the
                     system
                 </p>
+                <button
+                    className='btn btn-primary float-right m-2'
+                    onClick={() => history.push('/add-item')}
+                >
+                    + Add Item
+                </button>
                 <table className='table table-striped'>
-                    <th>Id</th>
-                    <th>Item Name</th>
-                    <th>Cost</th>
-                    <th></th>
+                    <tr>
+                        <th>Id</th>
+                        <th>Item Name</th>
+                        <th>Cost</th>
+                        <th></th>
+                    </tr>
                     <tbody>
                         {items.map((item: Item) => (
                             <tr key={`${item.name}:${item.cost}`}>
@@ -35,7 +46,14 @@ class Items extends PureComponent<ItemsProps> {
                                 <td>${item.cost}</td>
                                 <td>
                                     <div className='float-right'>
-                                        <button className='btn btn-info'>
+                                        <button
+                                            className='btn btn-info'
+                                            onClick={() => {
+                                                history.push(
+                                                    `/edit-item/${item.id}`
+                                                );
+                                            }}
+                                        >
                                             Edit
                                         </button>{' '}
                                         <button
