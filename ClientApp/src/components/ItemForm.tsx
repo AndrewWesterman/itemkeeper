@@ -18,7 +18,6 @@ class ItemForm extends PureComponent<ItemFormProps> {
 
     constructor(props: any) {
         super(props);
-        console.log('construct');
         this.state = new Item('', 0);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -66,35 +65,43 @@ class ItemForm extends PureComponent<ItemFormProps> {
                         : `Edit Entry ${this.id}`}
                 </h1>
                 <form className='form' onSubmit={this.handleSubmit}>
-                    <div className='form-group m-1'>
+                    <div className='form-group m-2'>
                         <label htmlFor='nameField'>Name</label>
                         <input
                             id='nameField'
                             className='form-control'
                             type='text'
-                            placeholder='Name'
+                            placeholder='Item name here...'
                             name='name'
                             value={name}
                             maxLength={50}
                             onChange={this.handleChange}
                             required
                         />
+                        <small className='form-text text-muted ml-1'>
+                            Name cannot be longer than 50 characters
+                        </small>
                     </div>
-                    <div className='form-group m-1'>
+                    <div className='form-group m-2'>
                         <label htmlFor='costField'>Cost</label>
-                        <input
-                            id='costField'
-                            className='form-control'
-                            type='number'
-                            min={0}
-                            name='cost'
-                            value={cost}
-                            onChange={this.handleChange}
-                            required
-                        />
+                        <div className='input-group'>
+                            <div className='input-group-prepend'>
+                                <div className='input-group-text'>$</div>
+                            </div>
+                            <input
+                                id='costField'
+                                className='form-control'
+                                type='number'
+                                min={0}
+                                name='cost'
+                                value={cost}
+                                onChange={this.handleChange}
+                                required
+                            />
+                        </div>
                     </div>
 
-                    <div className='float-right'>
+                    <div className='float-right m-1'>
                         <button
                             className='btn btn-light m-1'
                             onClick={() => {

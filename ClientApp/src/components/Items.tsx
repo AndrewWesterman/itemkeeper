@@ -47,7 +47,7 @@ class Items extends PureComponent<ItemsProps> {
                                 <td>
                                     <div className='float-right'>
                                         <button
-                                            className='btn btn-info'
+                                            className='btn btn-info ml-1'
                                             onClick={() => {
                                                 history.push(
                                                     `/edit-item/${item.id}`
@@ -57,7 +57,7 @@ class Items extends PureComponent<ItemsProps> {
                                             Edit
                                         </button>{' '}
                                         <button
-                                            className='btn btn-danger'
+                                            className='btn btn-danger ml-2'
                                             onClick={() => {
                                                 this.props.deleteItem(item.id);
                                             }}
