@@ -38,9 +38,10 @@ class ItemForm extends PureComponent<ItemFormProps> {
     }
 
     private handleSubmit(e: any) {
-        const stateToItem = (state: any): Item => {
+        const stateToItem = (state: Item): Item => {
             return {
                 ...state,
+                name: state.name.toString().trim(),
                 cost: +state.cost, // some nonsense to prevent cost being converted to a string
             };
         };
@@ -59,12 +60,15 @@ class ItemForm extends PureComponent<ItemFormProps> {
         const { name, cost } = this.state as Item;
         return (
             <Fragment>
+                {/* Header */}
                 <h1 className='text-primary'>
                     {this.id === undefined
                         ? 'Create Item'
                         : `Edit Entry ${this.id}`}
                 </h1>
+                {/* Item Form */}
                 <form className='form' onSubmit={this.handleSubmit}>
+                    {/* Name input */}
                     <div className='form-group m-2'>
                         <label htmlFor='nameField'>Name</label>
                         <input
@@ -75,13 +79,16 @@ class ItemForm extends PureComponent<ItemFormProps> {
                             name='name'
                             value={name}
                             maxLength={50}
+                            pattern='^[a-zA-Z0-9\s]+$'
                             onChange={this.handleChange}
                             required
                         />
                         <small className='form-text text-muted ml-1'>
-                            Name cannot be longer than 50 characters
+                            Name cannot be longer than 50 characters or contain
+                            any special characters (spaces excluded).
                         </small>
                     </div>
+                    {/* Cost input */}
                     <div className='form-group m-2'>
                         <label htmlFor='costField'>Cost</label>
                         <div className='input-group'>
@@ -102,6 +109,7 @@ class ItemForm extends PureComponent<ItemFormProps> {
                     </div>
 
                     <div className='float-right m-1'>
+                        {/* Back button */}
                         <button
                             className='btn btn-light m-1'
                             onClick={() => {
@@ -110,6 +118,7 @@ class ItemForm extends PureComponent<ItemFormProps> {
                         >
                             Back
                         </button>
+                        {/* Submit button */}
                         <button className='btn btn-primary m-1' type='submit'>
                             Submit
                         </button>
