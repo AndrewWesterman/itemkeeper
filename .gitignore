@@ -232,5 +232,5 @@ _Pvt_Extensions
 .fake/
 
 # Personal config files that contain private keys/secrets
-appsettings.Development.json
+#appsettings.Development.json
 appsettings.Production.json
