@@ -18,7 +18,7 @@ class MaxItemCosts extends PureComponent<ItemsProps> {
         const { maxItemCosts, history } = this.props;
         return (
             <div>
-                <h1 className='text-primary'>Max Items Costs</h1>
+                <h1 className='text-primary'>Max Item Costs</h1>
                 <p className='float-left'>
                     Below is a list of each unique item in the system, along
                     with the maximum cost of the item
