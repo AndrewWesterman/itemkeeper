@@ -30,8 +30,8 @@ class SearchMaxCost extends PureComponent<ItemFormProps> {
         e.preventDefault();
         this.setState({ searched: false });
         await this.props.getMaxCostItem(this.state.name);
-        this.setState({ searched: true });
         this.itemName = this.state.name;
+        this.setState({ searched: true });
     }
 
     public render() {
