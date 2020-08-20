@@ -6,6 +6,7 @@ import './app.css';
 import Items from './components/Items';
 import ItemForm from './components/ItemForm';
 import MaxItemCosts from './components/MaxItemCosts';
+import SearchMaxCost from './components/SearchMaxCost';
 
 export default () => (
     <Layout>
@@ -15,6 +16,7 @@ export default () => (
         <Route exact path='/add-item' component={ItemForm} />
         <Route exact path='/edit-item/:id' component={ItemForm} />
 
-        <Route exact path='/items/maxCosts' component={MaxItemCosts} />
+        <Route exact path='/items/search-max-cost' component={SearchMaxCost} />
+        <Route exact path='/items/max-costs' component={MaxItemCosts} />
     </Layout>
 );

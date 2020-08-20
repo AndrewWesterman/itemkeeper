@@ -50,7 +50,7 @@ export default class NavMenu extends React.PureComponent<
                                     <NavLink
                                         tag={Link}
                                         className='text-dark'
-                                        to='/items/maxCosts'
+                                        to='/items/max-costs'
                                     >
                                         MaxCosts
                                     </NavLink>
@@ -59,7 +59,7 @@ export default class NavMenu extends React.PureComponent<
                                     <NavLink
                                         tag={Link}
                                         className='text-dark'
-                                        to='/'
+                                        to='/items/search-max-cost'
                                     >
                                         SearchMax
                                     </NavLink>
