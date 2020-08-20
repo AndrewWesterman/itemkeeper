@@ -32,7 +32,7 @@ class Items extends PureComponent<ItemsProps> {
                 <table className='table table-striped'>
                     <thead>
                         <tr>
-                            <th>Id</th>
+                            <th className='d-none d-sm-table-cell'>Id</th>
                             <th>Item Name</th>
                             <th>Cost</th>
                             <th></th>
@@ -41,13 +41,15 @@ class Items extends PureComponent<ItemsProps> {
                     <tbody>
                         {items.map((item: Item) => (
                             <tr key={`${item.name}:${item.cost}`}>
-                                <td>{item.id}</td>
+                                <td className='d-none d-sm-table-cell'>
+                                    {item.id}
+                                </td>
                                 <td>{item.name}</td>
                                 <td>${item.cost}</td>
                                 <td>
                                     <div className='float-right'>
                                         <button
-                                            className='btn btn-info ml-1'
+                                            className='btn btn-info mr-2'
                                             onClick={() => {
                                                 history.push(
                                                     `/edit-item/${item.id}`
@@ -57,7 +59,7 @@ class Items extends PureComponent<ItemsProps> {
                                             Edit
                                         </button>{' '}
                                         <button
-                                            className='btn btn-danger ml-2'
+                                            className='btn btn-danger mr-1'
                                             onClick={() => {
                                                 if (item.id)
                                                     this.props.deleteItem(
