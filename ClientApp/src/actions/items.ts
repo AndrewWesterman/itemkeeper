@@ -8,6 +8,8 @@ import {
     CREATE_ITEM,
     UPDATE_ITEM,
     GET_MAX_ITEM_COSTS,
+    GET_MAX_COST_ITEM,
+    CLEAR_MAX_COST_ITEM,
 } from './types';
 
 export interface GetItemsAction {
@@ -25,7 +27,21 @@ export interface GetMaxItemsAction {
     maxItemCosts: Item[];
 }
 
-export type KnownAction = GetItemsAction | GetItemAction | GetMaxItemsAction;
+export interface GetMaxCostItemAction {
+    type: String;
+    maxCostItem: Item;
+}
+
+export interface NoPayloadAction {
+    type: String;
+}
+
+export type KnownAction =
+    | GetItemsAction
+    | GetItemAction
+    | GetMaxItemsAction
+    | GetMaxCostItemAction
+    | NoPayloadAction;
 
 export const actions = {
     // Get the items from server
@@ -35,6 +51,16 @@ export const actions = {
                 res.json()
             );
             dispatch({ type: GET_ITEMS, items });
+        } catch (err) {}
+    },
+
+    // Get item by id
+    getItem: (id: number): AppThunkAction<KnownAction> => async (dispatch) => {
+        try {
+            const item: Item = await fetch(`/api/items/${id}`).then((res) =>
+                res.json()
+            );
+            dispatch({ type: GET_ITEM, item });
         } catch (err) {}
     },
 
@@ -48,17 +74,16 @@ export const actions = {
         } catch (err) {}
     },
 
-    // Get item by id
-    getItem: (
-        id: number,
-        callback?: any
-    ): AppThunkAction<KnownAction> => async (dispatch) => {
+    // Gets max cost item
+    getMaxCostItem: (name: string): AppThunkAction<KnownAction> => async (
+        dispatch
+    ) => {
         try {
-            const item: Item = await fetch(`/api/items/${id}`).then((res) =>
-                res.json()
-            );
-            dispatch({ type: GET_ITEM, item });
-            if (callback) callback();
+            dispatch({ type: CLEAR_MAX_COST_ITEM });
+            const maxCostItem: Item = await fetch(
+                `/api/items/${name}/maxPrice`
+            ).then((res) => res.json());
+            dispatch({ type: GET_MAX_COST_ITEM, maxCostItem });
         } catch (err) {}
     },
 

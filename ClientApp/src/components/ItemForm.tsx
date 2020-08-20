@@ -23,13 +23,14 @@ class ItemForm extends PureComponent<ItemFormProps> {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    public componentDidMount() {
+    public async componentDidMount() {
         // Init our form state to the item belonging to :id
         if (this.id) {
-            this.props.getItem(+this.id, () => {
-                // callback to update state once we get the item
-                this.setState({ ...this.props.item });
-            });
+            // ESLint complains about this but some testing
+            // makes it looks like this actually awaits the
+            // inner async method Thunk maps to
+            await this.props.getItem(+this.id);
+            this.setState({ ...this.props.item });
         }
     }
 
@@ -38,6 +39,7 @@ class ItemForm extends PureComponent<ItemFormProps> {
     }
 
     private handleSubmit(e: any) {
+        e.preventDefault();
         const stateToItem = (state: Item): Item => {
             return {
                 ...state,
@@ -45,8 +47,6 @@ class ItemForm extends PureComponent<ItemFormProps> {
                 cost: +state.cost, // some nonsense to prevent cost being converted to a string
             };
         };
-
-        e.preventDefault();
         if (this.id === undefined) {
             this.props.createItem(stateToItem(this.state));
             this.props.history.push('/');

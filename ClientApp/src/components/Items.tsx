@@ -57,7 +57,10 @@ class Items extends PureComponent<ItemsProps> {
                                         <button
                                             className='btn btn-danger ml-2'
                                             onClick={() => {
-                                                this.props.deleteItem(item.id);
+                                                if (item.id)
+                                                    this.props.deleteItem(
+                                                        item.id
+                                                    );
                                             }}
                                         >
                                             Delete
