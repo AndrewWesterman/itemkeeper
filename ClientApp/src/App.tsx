@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, RouteComponentProps } from 'react-router';
+import { Route } from 'react-router';
 import Layout from './components/Layout';
 
 import './app.css';

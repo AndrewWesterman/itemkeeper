@@ -30,12 +30,14 @@ class Items extends PureComponent<ItemsProps> {
                     + Add Item
                 </button>
                 <table className='table table-striped'>
-                    <tr>
-                        <th>Id</th>
-                        <th>Item Name</th>
-                        <th>Cost</th>
-                        <th></th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Item Name</th>
+                            <th>Cost</th>
+                            <th></th>
+                        </tr>
+                    </thead>
                     <tbody>
                         {items.map((item: Item) => (
                             <tr key={`${item.name}:${item.cost}`}>

@@ -4,10 +4,8 @@ import { ItemState } from '../reducers/items';
 import { actions } from '../actions/items';
 import { ApplicationState } from '../store';
 import { Item } from '../models/Item';
-import { History, LocationState } from 'history';
 
-type ItemsProps = ItemState &
-    typeof actions & { history: History<LocationState> };
+type ItemsProps = ItemState & typeof actions;
 
 class MaxItemCosts extends PureComponent<ItemsProps> {
     public componentDidMount() {
@@ -15,7 +13,7 @@ class MaxItemCosts extends PureComponent<ItemsProps> {
     }
 
     public render() {
-        const { maxItemCosts, history } = this.props;
+        const { maxItemCosts } = this.props;
         return (
             <div>
                 <h1 className='text-primary'>Max Item Costs</h1>
@@ -24,10 +22,12 @@ class MaxItemCosts extends PureComponent<ItemsProps> {
                     with the maximum cost of the item
                 </p>
                 <table className='table table-striped'>
-                    <tr>
-                        <th>Item Name</th>
-                        <th>Cost</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Cost</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         {maxItemCosts.map((item: Item) => (
                             <tr key={`${item.name}:${item.cost}`}>
