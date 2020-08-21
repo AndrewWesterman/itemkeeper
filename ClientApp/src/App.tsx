@@ -3,14 +3,17 @@ import { Route, Switch } from 'react-router';
 import Layout from './components/Layout';
 
 import './app.css';
+
+import Alert from './components/Alert';
 import Items from './components/Items';
 import ItemForm from './components/ItemForm';
 import MaxItemCosts from './components/MaxItemCosts';
 import SearchMaxCost from './components/SearchMaxCost';
-import { PageNotFound } from './components/PageNotFound';
+import PageNotFound from './components/PageNotFound';
 
 export default () => (
     <Layout>
+        <Alert />
         <Switch>
             <Route exact path='/' component={Items} />
             <Route exact path='/items' component={Items} />

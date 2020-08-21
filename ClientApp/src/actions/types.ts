@@ -6,3 +6,5 @@ export const DELETE_ITEM: String = 'DELETE_ITEMS';
 export const GET_MAX_ITEM_COSTS: String = 'GET_MAX_ITEM_COSTS';
 export const GET_MAX_COST_ITEM: String = 'GET_MAX_COST_ITEM';
 export const CLEAR_MAX_COST_ITEM: String = 'CLEAR_MAX_COST_ITEM';
+export const SET_ALERT: String = 'SET_ALERT';
+export const CLEAR_ALERT: String = 'CLEAR_ALERT';

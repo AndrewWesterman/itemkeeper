@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import './PageNotFound.css';
 
-export class PageNotFound extends PureComponent {
+export default class PageNotFound extends PureComponent {
     public render() {
         return (
             <div className='v-center'>

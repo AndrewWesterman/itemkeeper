@@ -1,4 +1,5 @@
 import { Item } from '../models/Item';
+import { actions as alertActions, SUCCESS, DANGER } from './alerts';
 import { AppThunkAction } from '../store';
 
 import {
@@ -43,6 +44,12 @@ export type KnownAction =
     | GetMaxCostItemAction
     | NoPayloadAction;
 
+const { setAlert } = alertActions;
+
+const userFriendlyGenericError = (dispatch: any) => {
+    dispatch(setAlert(DANGER, 'Something went wrong :(') as any);
+};
+
 export const actions = {
     // Get the items from server
     getItems: (): AppThunkAction<KnownAction> => async (dispatch) => {
@@ -51,7 +58,9 @@ export const actions = {
                 res.json()
             );
             dispatch({ type: GET_ITEMS, items });
-        } catch (err) {}
+        } catch (err) {
+            userFriendlyGenericError(dispatch);
+        }
     },
 
     // Get item by id
@@ -61,7 +70,9 @@ export const actions = {
                 res.json()
             );
             dispatch({ type: GET_ITEM, item });
-        } catch (err) {}
+        } catch (err) {
+            userFriendlyGenericError(dispatch);
+        }
     },
 
     // Gets all unique items and their max cost
@@ -71,7 +82,9 @@ export const actions = {
                 '/api/items/maxPrices'
             ).then((res) => res.json());
             dispatch({ type: GET_MAX_ITEM_COSTS, maxItemCosts });
-        } catch (err) {}
+        } catch (err) {
+            userFriendlyGenericError(dispatch);
+        }
     },
 
     // Gets max cost item
@@ -84,13 +97,23 @@ export const actions = {
                 `/api/items/${name}/maxPrice`
             ).then((res) => res.json());
             dispatch({ type: GET_MAX_COST_ITEM, maxCostItem });
-        } catch (err) {}
+        } catch (err) {
+            userFriendlyGenericError(dispatch);
+        }
     },
 
     // Create the item
     createItem: (item: Item): AppThunkAction<KnownAction> => async (
         dispatch
     ) => {
+        const createItemGenericError = () =>
+            dispatch(
+                setAlert(
+                    DANGER,
+                    'Error creating the item, please try again'
+                ) as any
+            );
+
         try {
             const res = await fetch('/api/items/', {
                 method: 'POST',
@@ -102,14 +125,27 @@ export const actions = {
                     res.json()
                 );
                 dispatch({ type: CREATE_ITEM, items });
+                dispatch(setAlert(SUCCESS, 'Item created!') as any);
+            } else {
+                createItemGenericError();
             }
-        } catch (err) {}
+        } catch (err) {
+            createItemGenericError();
+        }
     },
 
     // Update the item
     updateItem: (id: number, item: Item): AppThunkAction<KnownAction> => async (
         dispatch
     ) => {
+        const updateItemGenericError = () =>
+            dispatch(
+                setAlert(
+                    DANGER,
+                    'Error updating the item, please try again.'
+                ) as any
+            );
+
         try {
             const res = await fetch(`/api/items/${id}`, {
                 method: 'PUT',
@@ -121,21 +157,37 @@ export const actions = {
                     res.json()
                 );
                 dispatch({ type: UPDATE_ITEM, items });
+                dispatch(setAlert(SUCCESS, 'Item updated!') as any);
+            } else {
+                updateItemGenericError();
             }
-        } catch (err) {}
+        } catch (err) {
+            updateItemGenericError();
+        }
     },
 
     // Get the items from server
-    deleteItem: (id?: number): AppThunkAction<KnownAction> => async (
+    deleteItem: (id: number): AppThunkAction<KnownAction> => async (
         dispatch
     ) => {
-        if (!id) return;
+        const deleteItemGenericError = () =>
+            dispatch(
+                setAlert(
+                    DANGER,
+                    'Error deleting the item, please try again'
+                ) as any
+            );
 
         try {
             const res = await fetch(`/api/items/${id}`, { method: 'DELETE' });
             if (res.ok) {
                 dispatch({ type: DELETE_ITEM, items: await res.json() });
+                dispatch(setAlert(SUCCESS, 'Item deleted!') as any);
+            } else {
+                deleteItemGenericError();
             }
-        } catch (err) {}
+        } catch (err) {
+            deleteItemGenericError();
+        }
     },
 };
