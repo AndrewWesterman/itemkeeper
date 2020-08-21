@@ -16,6 +16,7 @@ class Alert extends PureComponent<AlertProps> {
                     alerts.map((alert) => (
                         <div
                             key={alert.id}
+                            data-testid={alert.id}
                             className={`alert alert-${alert.alertType}`}
                         >
                             {alert.message}
