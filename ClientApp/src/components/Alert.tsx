@@ -27,6 +27,6 @@ class Alert extends PureComponent<AlertProps> {
 }
 
 export default connect(
-    (state: ApplicationState) => state.alerts,
+    (state: ApplicationState) => ({ ...state.alerts }),
     actions
 )(Alert as any);

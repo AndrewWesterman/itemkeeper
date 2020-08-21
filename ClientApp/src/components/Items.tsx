@@ -87,6 +87,6 @@ class Items extends PureComponent<ItemsProps> {
 }
 
 export default connect(
-    (state: ApplicationState) => state.items,
+    (state: ApplicationState) => ({ ...state.items }),
     actions
 )(Items as any);
