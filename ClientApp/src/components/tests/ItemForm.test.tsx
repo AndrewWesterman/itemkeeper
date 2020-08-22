@@ -2,14 +2,10 @@ import React from 'react';
 
 import ItemForm from '../ItemForm';
 import { Item } from '../../models/Item';
-import { render, storeFake } from './test-utils';
-import { screen, fireEvent } from '@testing-library/react';
+import { render } from './test-utils';
+import { screen } from '@testing-library/react';
 import { ItemState } from '../../reducers/items';
-import { actions } from '../../actions/items';
 import '@testing-library/jest-dom';
-import { AppThunkAction } from '../../store';
-import { KnownAction } from '../../actions/alerts';
-import { execPath } from 'process';
 
 const initialItemState: ItemState = {
     item: undefined,
