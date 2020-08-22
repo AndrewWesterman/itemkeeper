@@ -2,14 +2,12 @@ import React from 'react';
 
 import SearchMaxCost from '../SearchMaxCost';
 import { Item } from '../../models/Item';
-import { render, storeFake } from './test-utils';
-import { screen, fireEvent } from '@testing-library/react';
+import { render } from './test-utils';
+import { screen } from '@testing-library/react';
 import { ItemState } from '../../reducers/items';
 import { actions } from '../../actions/items';
 import '@testing-library/jest-dom';
-import { AppThunkAction } from '../../store';
-import { KnownAction } from '../../actions/alerts';
-import { execPath } from 'process';
+import userEvent from '@testing-library/user-event';
 
 const initialItemState: ItemState = {
     item: undefined,
@@ -20,6 +18,8 @@ const initialItemState: ItemState = {
     isLoading: true,
 };
 describe('<SearchMaxCost />', () => {
+    afterEach(() => jest.clearAllMocks());
+
     test('render', () => {
         render(<SearchMaxCost />, { initialState: {} });
     });
@@ -64,5 +64,25 @@ describe('<SearchMaxCost />', () => {
         const notFound = screen.getByTestId('item-not-found-message');
         expect(notFound).toBeInTheDocument();
         expect(notFound.textContent?.includes(testName)).toBeTruthy();
+    });
+
+    /* Not that we do not test for an invalid input here, this is because 
+    a) that would test HTML 5 form capabilities and not our app,
+    b) HTML 5 form capabilities don't seem to work in jest
+    thus we can only test that clicking submit does what it is supposed to
+    */
+    it('should call getMaxCostItem action with provided name on Submit click', () => {
+        const initialState = {
+            items: {
+                ...initialItemState,
+            },
+        };
+
+        const testItemName = 'Test Item 1';
+        let searchMaxSpy = jest.spyOn(actions, 'getMaxCostItem');
+        render(<SearchMaxCost />, { initialState });
+        userEvent.type(screen.getByTestId('search-name-input'), testItemName);
+        userEvent.click(screen.getByTestId('search-max-button'));
+        expect(searchMaxSpy).toHaveBeenCalledWith(testItemName);
     });
 });

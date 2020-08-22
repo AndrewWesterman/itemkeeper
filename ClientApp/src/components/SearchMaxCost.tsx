@@ -68,6 +68,7 @@ class SearchMaxCost extends PureComponent<ItemFormProps> {
                             </div>
                             <input
                                 id='nameField'
+                                data-testid='search-name-input'
                                 className='form-control'
                                 type='text'
                                 placeholder='Search item name here...'
@@ -83,6 +84,7 @@ class SearchMaxCost extends PureComponent<ItemFormProps> {
                             <div className='input-group-append'>
                                 <button
                                     className='btn btn-primary'
+                                    data-testid='search-max-button'
                                     type='submit'
                                 >
                                     Search
