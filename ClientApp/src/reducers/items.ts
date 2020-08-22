@@ -23,6 +23,7 @@ export interface ItemState {
     items: Item[];
     maxItemCosts: Item[];
     maxCostItem?: Item;
+    lastSearchedName?: string;
     isLoading: boolean;
 }
 
@@ -31,6 +32,7 @@ const initialState: ItemState = {
     items: [],
     maxItemCosts: [],
     maxCostItem: undefined,
+    lastSearchedName: undefined,
     isLoading: true,
 };
 
@@ -55,8 +57,16 @@ export const items: Reducer<ItemState> = (
             const { maxItemCosts } = incomingAction as GetMaxItemsAction;
             return { ...state, maxItemCosts, isLoading: false };
         case GET_MAX_COST_ITEM:
-            const { maxCostItem } = incomingAction as GetMaxCostItemAction;
-            return { ...state, maxCostItem: maxCostItem, isLoading: false };
+            const {
+                maxCostItem,
+                nameSearched,
+            } = incomingAction as GetMaxCostItemAction;
+            return {
+                ...state,
+                maxCostItem,
+                lastSearchedName: nameSearched,
+                isLoading: false,
+            };
         case CLEAR_MAX_COST_ITEM:
             return { ...state, maxCostItem: undefined };
         default:

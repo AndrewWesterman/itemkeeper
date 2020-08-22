@@ -8,16 +8,14 @@ type ItemFormProps = ItemState & typeof actions;
 
 interface SearchMaxCostState {
     name: string;
-    searched: boolean;
 }
 
 class SearchMaxCost extends PureComponent<ItemFormProps> {
     state: SearchMaxCostState;
-    itemName: string = '';
 
     constructor(props: any) {
         super(props);
-        this.state = { name: '', searched: false };
+        this.state = { name: '' };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -28,22 +26,23 @@ class SearchMaxCost extends PureComponent<ItemFormProps> {
 
     private async handleSubmit(e: any) {
         e.preventDefault();
-        this.setState({ searched: false });
         await this.props.getMaxCostItem(this.state.name);
-        this.itemName = this.state.name;
-        this.setState({ searched: true });
     }
 
     public render() {
-        const { name, searched } = this.state as any;
-        const { maxCostItem } = this.props;
+        const { name } = this.state as any;
+        const { maxCostItem, lastSearchedName } = this.props;
         return (
             <Fragment>
                 {/* Header */}
                 <h1 className='text-primary'>Search For Max Item Cost</h1>
                 <p>Return the max cost for the item with the provided name</p>
                 {/* Item Form */}
-                <form className='form' onSubmit={this.handleSubmit}>
+                <form
+                    className='form'
+                    onSubmit={this.handleSubmit}
+                    data-testid='name-search-form'
+                >
                     <div className='form-group'>
                         {/* Name input */}
                         <div className='input-group m-1'>
@@ -93,12 +92,14 @@ class SearchMaxCost extends PureComponent<ItemFormProps> {
                     </div>
                 </form>
                 {maxCostItem && (
-                    <h3>
+                    <h3 data-testid={maxCostItem.name}>
                         Max cost for {maxCostItem.name} is ${maxCostItem.cost}
                     </h3>
                 )}
-                {!maxCostItem && searched && (
-                    <h3>Couldn't find '{this.itemName}'</h3>
+                {!maxCostItem && lastSearchedName && (
+                    <h3 data-testid='item-not-found-message'>
+                        Couldn't find '{lastSearchedName}'
+                    </h3>
                 )}
             </Fragment>
         );
@@ -106,6 +107,6 @@ class SearchMaxCost extends PureComponent<ItemFormProps> {
 }
 
 export default connect(
-    (state: ApplicationState) => state.items,
+    (state: ApplicationState) => ({ ...state.items }),
     actions
 )(SearchMaxCost as any);

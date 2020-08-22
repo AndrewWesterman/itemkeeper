@@ -31,6 +31,7 @@ export interface GetMaxItemsAction {
 export interface GetMaxCostItemAction {
     type: String;
     maxCostItem: Item;
+    nameSearched: string;
 }
 
 export interface NoPayloadAction {
@@ -93,11 +94,21 @@ export const actions = {
     ) => {
         try {
             dispatch({ type: CLEAR_MAX_COST_ITEM });
-            const maxCostItem: Item = await fetch(
-                `/api/items/${name}/maxPrice`
-            ).then((res) => res.json());
-            dispatch({ type: GET_MAX_COST_ITEM, maxCostItem });
+            const res = await fetch(`/api/items/${name}/maxPrice`);
+            if (res.ok) {
+                dispatch({
+                    type: GET_MAX_COST_ITEM,
+                    maxCostItem: await res.json(),
+                });
+            } else {
+                dispatch({
+                    type: GET_MAX_COST_ITEM,
+                    maxCostItem: undefined,
+                    nameSearched: name,
+                });
+            }
         } catch (err) {
+            console.log(err);
             userFriendlyGenericError(dispatch);
         }
     },
