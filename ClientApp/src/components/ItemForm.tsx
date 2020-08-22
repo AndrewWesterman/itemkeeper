@@ -61,7 +61,7 @@ class ItemForm extends PureComponent<ItemFormProps> {
         return (
             <Fragment>
                 {/* Header */}
-                <h1 className='text-primary'>
+                <h1 className='text-primary' data-testid='form-header'>
                     {this.id === undefined
                         ? 'Create Item'
                         : `Edit Entry ${this.id}`}
@@ -73,6 +73,7 @@ class ItemForm extends PureComponent<ItemFormProps> {
                         <label htmlFor='nameField'>Name</label>
                         <input
                             id='nameField'
+                            data-testid='name-input'
                             className='form-control'
                             type='text'
                             placeholder='Item name here...'
@@ -130,6 +131,6 @@ class ItemForm extends PureComponent<ItemFormProps> {
 }
 
 export default connect(
-    (state: ApplicationState) => state.items,
+    (state: ApplicationState) => ({ ...state.items }),
     actions
 )(ItemForm as any);
