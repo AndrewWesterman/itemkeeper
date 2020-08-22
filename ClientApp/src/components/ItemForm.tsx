@@ -98,6 +98,7 @@ class ItemForm extends PureComponent<ItemFormProps> {
                             </div>
                             <input
                                 id='costField'
+                                data-testid='cost-input'
                                 className='form-control'
                                 type='number'
                                 min={0}

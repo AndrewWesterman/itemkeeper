@@ -46,6 +46,11 @@ describe('<ItemForm />', () => {
             ((await screen.findByTestId('name-input')) as HTMLInputElement)
                 .value
         ).toBe(testItem.name);
+
+        expect(
+            +((await screen.findByTestId('cost-input')) as HTMLInputElement)
+                .value
+        ).toBe(testItem.cost);
     });
 
     it('should be empty if not in edit mode', () => {
