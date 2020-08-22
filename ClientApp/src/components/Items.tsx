@@ -25,6 +25,7 @@ class Items extends PureComponent<ItemsProps> {
                         system
                     </p>
                     <button
+                        data-testid='add-item-button'
                         className='btn btn-primary flex float-right m-2'
                         onClick={() => history.push('/add-item')}
                     >
@@ -32,7 +33,9 @@ class Items extends PureComponent<ItemsProps> {
                     </button>
                 </div>
                 {items === undefined || items.length === 0 ? (
-                    <h3 className='d-flex'>No items found, add some!</h3>
+                    <h3 className='d-flex' data-testid='no-items-message'>
+                        No items found, add some!
+                    </h3>
                 ) : (
                     <table className='table table-striped'>
                         <thead>
@@ -45,7 +48,10 @@ class Items extends PureComponent<ItemsProps> {
                         </thead>
                         <tbody>
                             {items.map((item: Item) => (
-                                <tr key={`${item.name}:${item.cost}`}>
+                                <tr
+                                    key={item.id}
+                                    data-testid={`entry-${item.id}`}
+                                >
                                     <td className='d-none d-sm-table-cell'>
                                         {item.id}
                                     </td>
@@ -55,6 +61,7 @@ class Items extends PureComponent<ItemsProps> {
                                         <div className='float-right'>
                                             <button
                                                 className='btn btn-info mr-2'
+                                                data-testid={`entry${item.id}-edit`}
                                                 onClick={() => {
                                                     history.push(
                                                         `/edit-item/${item.id}`
@@ -65,6 +72,7 @@ class Items extends PureComponent<ItemsProps> {
                                             </button>{' '}
                                             <button
                                                 className='btn btn-danger mr-1'
+                                                data-testid={`entry${item.id}-delete`}
                                                 onClick={() => {
                                                     if (item.id)
                                                         this.props.deleteItem(
