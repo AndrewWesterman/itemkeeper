@@ -82,6 +82,10 @@ namespace ItemKeeper.Controllers
                         Cost = g.Max(i => i.Cost)
                     }).FirstOrDefaultAsync();
 
+                if (maxCostItem == null)
+                {
+                    return NotFound(new { msg = "No items with that name found" });
+                }
                 return Ok(maxCostItem);
             }
             catch (Exception e)
