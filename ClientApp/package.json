@@ -27,7 +27,6 @@
         "@testing-library/jest-dom": "^5.11.3",
         "@testing-library/react": "^10.4.8",
         "@types/history": "4.7.3",
-        "@types/jest": "24.0.19",
         "@types/node": "12.11.6",
         "@types/react": "16.9.9",
         "@types/react-dom": "16.9.2",
@@ -43,12 +42,12 @@
         "eslint-plugin-import": "2.18.2",
         "eslint-plugin-jsx-a11y": "6.2.3",
         "eslint-plugin-react": "7.16.0",
-        "typescript": "3.6.4"
+        "typescript": "^3.9.7"
     },
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "cross-env CI=true react-scripts test -u --env=jsdom",
+        "test": "cross-env CI=true react-scripts test -u --env=jsdom-fourteen",
         "eject": "react-scripts eject",
         "lint": "eslint ./src/**/*.ts ./src/**/*.tsx"
     },
