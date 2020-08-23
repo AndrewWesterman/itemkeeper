@@ -12,9 +12,9 @@ namespace ItemKeeper.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
-        private readonly ItemContext _db;
+        private readonly IItemContext _db;
 
-        public ItemsController(ItemContext db): base()
+        public ItemsController(IItemContext db): base()
         {
             _db = db;
         }
@@ -173,7 +173,7 @@ namespace ItemKeeper.Controllers
                 var item = await _db.Items.FirstOrDefaultAsync(item => item.ID == id);
                 if (item == null)
                 {
-                    return BadRequest(new { msg = "Item not found." });                
+                    return NotFound(new { msg = "Item not found." });                
                 }
                 _db.Items.Remove(item);
                 await _db.SaveChangesAsync();

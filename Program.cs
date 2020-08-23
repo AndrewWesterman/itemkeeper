@@ -31,7 +31,7 @@ namespace ItemKeeper
 
                 try
                 {
-                    var db = services.GetRequiredService<ItemContext>();
+                    var db = services.GetRequiredService<IItemContext>();
                     DBInitializer.Initialize(db);
                 }
                 catch (Exception ex)

@@ -8,7 +8,7 @@ namespace ItemKeeper.Data
 {
     public static class DBInitializer
     {
-        public static void Initialize(ItemContext context)
+        public static void Initialize(IItemContext context)
         {
             context.Database.EnsureCreated();
             if (context.Items.Any())

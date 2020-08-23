@@ -24,6 +24,7 @@ namespace ItemKeeper
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ItemContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IItemContext, ItemContext>();
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
