@@ -126,7 +126,7 @@ export const actions = {
             );
 
         try {
-            const res = await fetch('/api/items/', {
+            const res = await fetch('/api/items', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(item),
