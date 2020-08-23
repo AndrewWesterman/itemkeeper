@@ -3,6 +3,13 @@ import { SET_ALERT, CLEAR_ALERT } from '../../actions/types';
 import { Alert } from '../../models/Alert';
 
 describe('alerts reducer', () => {
+    it('should handle invalid action input', () => {
+        const initialState = { stateProp: 'some value' };
+        expect(
+            alerts(initialState as any, { type: 'Invalid Type' } as any)
+        ).toStrictEqual(initialState);
+    });
+
     it('should handle SET_ALERT', () => {
         const testAlert = new Alert('test', 'success', '1');
         expect(
