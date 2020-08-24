@@ -11,6 +11,8 @@ import {
     GET_MAX_ITEM_COSTS,
     GET_MAX_COST_ITEM,
     CLEAR_MAX_COST_ITEM,
+    LOADING_DATA,
+    STOP_LOADING_DATA,
 } from './types';
 
 export interface GetItemsAction {
@@ -49,12 +51,14 @@ const { setAlert } = alertActions;
 
 const userFriendlyGenericError = (dispatch: any) => {
     dispatch(setAlert(DANGER, 'Something went wrong :(') as any);
+    dispatch({ type: STOP_LOADING_DATA });
 };
 
 export const actions = {
     // Get the items from server
     getItems: (): AppThunkAction<KnownAction> => async (dispatch) => {
         try {
+            dispatch({ type: LOADING_DATA });
             const items: Item[] = await fetch('/api/items').then((res) =>
                 res.json()
             );
@@ -67,6 +71,7 @@ export const actions = {
     // Get item by id
     getItem: (id: number): AppThunkAction<KnownAction> => async (dispatch) => {
         try {
+            dispatch({ type: LOADING_DATA });
             const item: Item = await fetch(`/api/items/${id}`).then((res) =>
                 res.json()
             );
@@ -79,6 +84,7 @@ export const actions = {
     // Gets all unique items and their max cost
     getMaxItemCosts: (): AppThunkAction<KnownAction> => async (dispatch) => {
         try {
+            dispatch({ type: LOADING_DATA });
             const maxItemCosts: Item[] = await fetch(
                 '/api/items/maxPrices'
             ).then((res) => res.json());
@@ -93,6 +99,7 @@ export const actions = {
         dispatch
     ) => {
         try {
+            dispatch({ type: LOADING_DATA });
             dispatch({ type: CLEAR_MAX_COST_ITEM });
             const res = await fetch(`/api/items/${name}/maxPrice`);
             if (res.ok) {

@@ -8,6 +8,8 @@ import {
     GET_MAX_COST_ITEM,
     GET_ITEM,
     CLEAR_MAX_COST_ITEM,
+    LOADING_DATA,
+    STOP_LOADING_DATA,
 } from '../../actions/types';
 import { Item } from '../../models/Item';
 import {
@@ -76,6 +78,7 @@ describe('items reducer', () => {
             isLoading: false,
         } as ItemState);
     });
+
     it('should handle DELETE_ITEM', () => {
         const testItem = new Item('test', 50);
         expect(
@@ -89,6 +92,7 @@ describe('items reducer', () => {
             isLoading: false,
         } as ItemState);
     });
+
     it('should handle GET_ITEM', () => {
         const testItem = new Item('test', 50);
         expect(
@@ -102,6 +106,7 @@ describe('items reducer', () => {
             isLoading: false,
         } as ItemState);
     });
+
     it('should handle GET_MAX_ITEM_COSTS', () => {
         const testItem = new Item('test', 50);
         expect(
@@ -115,6 +120,7 @@ describe('items reducer', () => {
             isLoading: false,
         } as ItemState);
     });
+
     it('should handle GET_MAX_COST_ITEM', () => {
         const testItem = new Item('test', 50);
         expect(
@@ -130,6 +136,7 @@ describe('items reducer', () => {
             isLoading: false,
         } as ItemState);
     });
+
     it('should handle CLEAR_MAX_COST_ITEM', () => {
         const testItem = new Item('test', 50);
         expect(
@@ -139,6 +146,28 @@ describe('items reducer', () => {
         ).toStrictEqual({
             ...initialState,
             maxCostItem: undefined,
+        });
+    });
+
+    it('should handle LOADING_DATA', () => {
+        expect(
+            items({ ...initialState, isLoading: false }, {
+                type: LOADING_DATA,
+            } as NoPayloadAction)
+        ).toStrictEqual({
+            ...initialState,
+            isLoading: true,
+        });
+    });
+
+    it('should handle STOP_LOADING_DATA', () => {
+        expect(
+            items({ ...initialState, isLoading: true }, {
+                type: STOP_LOADING_DATA,
+            } as NoPayloadAction)
+        ).toStrictEqual({
+            ...initialState,
+            isLoading: false,
         });
     });
 });

@@ -56,6 +56,7 @@ describe('<SearchMaxCost />', () => {
                 ...initialItemState,
                 maxCostItem: undefined,
                 lastSearchedName: testName,
+                isLoading: false,
             },
         };
 

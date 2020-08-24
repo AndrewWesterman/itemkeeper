@@ -14,7 +14,7 @@ const initialItemState: ItemState = {
     maxItemCosts: [],
     maxCostItem: undefined,
     lastSearchedName: undefined,
-    isLoading: true,
+    isLoading: false,
 };
 
 describe('<Items />', () => {

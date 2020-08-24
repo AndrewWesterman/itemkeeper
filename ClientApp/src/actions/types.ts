@@ -8,3 +8,5 @@ export const GET_MAX_COST_ITEM: String = 'GET_MAX_COST_ITEM';
 export const CLEAR_MAX_COST_ITEM: String = 'CLEAR_MAX_COST_ITEM';
 export const SET_ALERT: String = 'SET_ALERT';
 export const CLEAR_ALERT: String = 'CLEAR_ALERT';
+export const LOADING_DATA: String = 'LOADING_DATA';
+export const STOP_LOADING_DATA: String = 'STOP_LOADING_DATA';

@@ -12,7 +12,7 @@ const initialItemState: ItemState = {
     items: [],
     maxItemCosts: [],
     maxCostItem: undefined,
-    isLoading: true,
+    isLoading: false,
 };
 describe('<MaxItemCosts />', () => {
     test('render', () => {

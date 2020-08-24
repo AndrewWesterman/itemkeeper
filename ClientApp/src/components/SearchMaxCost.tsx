@@ -3,6 +3,7 @@ import { actions } from '../actions/items';
 import React, { PureComponent, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
+import { Spinner } from './Spinner';
 
 type ItemFormProps = ItemState & typeof actions;
 
@@ -31,7 +32,7 @@ class SearchMaxCost extends PureComponent<ItemFormProps> {
 
     public render() {
         const { name } = this.state as any;
-        const { maxCostItem, lastSearchedName } = this.props;
+        const { maxCostItem, lastSearchedName, isLoading } = this.props;
         return (
             <Fragment>
                 {/* Header */}
@@ -93,15 +94,28 @@ class SearchMaxCost extends PureComponent<ItemFormProps> {
                         </div>
                     </div>
                 </form>
-                {maxCostItem && (
-                    <h3 data-testid={maxCostItem.name}>
-                        Max cost for {maxCostItem.name} is ${maxCostItem.cost}
-                    </h3>
-                )}
-                {!maxCostItem && lastSearchedName && (
-                    <h3 data-testid='item-not-found-message'>
-                        Couldn't find '{lastSearchedName}'
-                    </h3>
+                {isLoading && lastSearchedName ? (
+                    <Spinner />
+                ) : (
+                    [
+                        maxCostItem && (
+                            <h3
+                                key='max-cost-result'
+                                data-testid={maxCostItem.name}
+                            >
+                                Max cost for {maxCostItem.name} is $
+                                {maxCostItem.cost}
+                            </h3>
+                        ),
+                        !maxCostItem && lastSearchedName && (
+                            <h3
+                                key='not-found-message'
+                                data-testid='item-not-found-message'
+                            >
+                                Couldn't find '{lastSearchedName}'
+                            </h3>
+                        ),
+                    ]
                 )}
             </Fragment>
         );

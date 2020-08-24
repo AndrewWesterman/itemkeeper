@@ -7,6 +7,8 @@ import {
     GET_MAX_ITEM_COSTS,
     GET_MAX_COST_ITEM,
     CLEAR_MAX_COST_ITEM,
+    LOADING_DATA,
+    STOP_LOADING_DATA,
 } from '../actions/types';
 import {
     KnownAction,
@@ -69,6 +71,10 @@ export const items: Reducer<ItemState> = (
             };
         case CLEAR_MAX_COST_ITEM:
             return { ...state, maxCostItem: undefined };
+        case LOADING_DATA:
+            return { ...state, isLoading: true };
+        case STOP_LOADING_DATA:
+            return { ...state, isLoading: false };
         default:
             return state;
     }
