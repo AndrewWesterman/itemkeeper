@@ -22,7 +22,7 @@ class Items extends PureComponent<ItemsProps> {
                 <h1 className='text-primary'>All Current Items</h1>
                 <div className=''>
                     <p className='d-inline-block'>
-                        Below is a list off all current items catalogued in the
+                        Below is a list of all current items catalogued in the
                         system
                     </p>
                     <button
